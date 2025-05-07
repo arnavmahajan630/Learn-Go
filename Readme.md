@@ -1,1 +1,1 @@
-Learning Golang Through Projects
+Learning And Practicing GOLang
