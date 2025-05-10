@@ -5,9 +5,6 @@ import (
 	"log"
 	"net/http"
 )
-func funny() {
-	
-}
 
 func hellohandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/hello" {
