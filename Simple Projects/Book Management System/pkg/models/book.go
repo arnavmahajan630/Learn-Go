@@ -9,9 +9,9 @@ var db *gorm.DB
 
 type Book struct {
 	gorm.Model
-	Name        string `"json:"name"`
-	Author      string `json"author"`
-	Publication string `json"publication"`
+	Name        string `gorm:"column:name" json:"name"`
+	Author      string `gorm:"column:author" json:"author"`
+	Publication string `gorm:"column:publication" json:"publication"`
 }
 
 // init function for initializing
@@ -22,21 +22,21 @@ func init() {
 
 }
 
-func(b * Book) CreateBook() *Book{
-   db.Create(&b)
-   return b;
+func (b *Book) CreateBook() *Book {
+	db.Create(&b)
+	return b
 }
 
-func GetAllBooks() []Book{
-	var Books[]Book
+func GetAllBooks() []Book {
+	var Books []Book
 	db.Find(&Books)
 	return Books
 }
 
-func GetBookByID(Id int64) (*Book, *gorm.DB){
-    var tb Book
+func GetBookByID(Id int64) (*Book, *gorm.DB) {
+	var tb Book
 	db := db.Where("Id=?", Id).Find(&tb)
-	return &tb,db // returning the found book as well as the db pointer
+	return &tb, db // returning the found book as well as the db pointer
 }
 
 func DeleteBook(Id int64) Book {
