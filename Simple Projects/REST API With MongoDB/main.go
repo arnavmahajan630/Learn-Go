@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Ocean-Whisperer/Learn-Go/Simple-Projects/REST-API-With-MongoDB/controllers"
@@ -13,9 +14,14 @@ func main() {
 	router := httprouter.New()
 	uc := controllers.NewUserController(getSession())
 	router.GET("/user/:id", uc.GetUser)
-	router.POST("/user", uc.Get.CreateUser)
+	router.POST("/user", uc.CreateUser)
 	router.DELETE("/user/:id", uc.DeleteUser)
-	http.ListenAndServe(":8080", router)
+	err := http.ListenAndServe(":8080", router) // golang server runs at 8080
+	if(err == nil) {
+		fmt.Println("Server started at port 8080")
+	}else {
+		panic(err)
+	}
 }
 
 func getSession() *mgo.Session {
