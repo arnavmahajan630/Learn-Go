@@ -7,4 +7,7 @@ type Stock struct {
 	Company string `json:"company"`
 }
 
-
+type Resp struct {
+	ID      int64  `json:"id"`
+	Message string `json"message"`
+}

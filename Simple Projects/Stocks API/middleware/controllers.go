@@ -1,4 +1,4 @@
-package middldeware
+package controllers
 
 import (
 	"database/sql"
@@ -7,8 +7,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/Ocean-Whisperer/Learn-Go/Simple-Projects/Stocks-API/models"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
@@ -29,24 +31,55 @@ func CreateConnection() *sql.DB {
 func CreateStock(w http.ResponseWriter, r *http.Request) {
 	var stock models.Stock
 	err := json.NewDecoder(r.Body).Decode(&stock)
-   if err != nil {
-      log.Fatal("Unable to decode the body: ", err)
-   }
-   
+	if err != nil {
+		log.Fatal("Unable to decode the body: ", err)
+	}
+	insertID := insertStock(stock)
+	res := models.Resp{
+		ID:      insertID,
+		Message: "stock Created successfully",
+	}
+	json.NewEncoder(w).Encode(res)
 
 }
 
-func GetAllStocks() {
+func GetAllStocks(w http.ResponseWriter, r *http.Request) {
+	stocks , err := getallstocks()
+
+	if(err != nil){log.Fatal(err)}
+	json.NewEncoder(w).Encode(stocks)
 
 }
 
-func GetStockID() {
+func GetStockID(w http.ResponseWriter, r* http.Request) {
+    params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if(err != nil){log.Fatal(err)}
+	stock := getstock(int64(id))
+	json.NewEncoder(w).Encode(stock)
+
 
 }
 
-func UpdateStocks() {
-
+func UpdateStocks(w http.ResponseWriter, r* http.Request) {
+  params := mux.Vars(r)
+  id, err := strconv.Atoi(params["id"])
+  if( err != nil) {log.Fatal(err)}
+  var stock models.Stock
+  err = json.NewDecoder(r.Body).Decode(&stock)
+  if(err != nil) {
+	log.Fatal(err)
+  }
+  updatedres := updatestocks(int64(id), stock)
+  msg := fmt.Sprintf("Stock has been updated successfully : %v", updatedres)
+  res := models.Resp{ID: int64(id), Message: msg, }
+  json.NewEncoder(w).Encode(res)
 }
-func DeleteStcok() {
-
+func DeleteStcok(w http.ResponseWriter, r * http.Request) {
+   params := mux.Vars(r)
+   id, err := strconv.Atoi(params["id"])
+   if( err != nil) {log.Fatal(err)}
+   deletedres := deletestock(int64(id))
+   fmt.Sprintf("The stock has been deleted successfully %v", deletedres)
+   json.NewEncoder(w).Encode(deletedres)
 }
