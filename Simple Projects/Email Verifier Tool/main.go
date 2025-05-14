@@ -14,7 +14,7 @@ func checkdomain(domain string) {
 	var hasMX, hasSPF, hasDMARC bool
 	var spfRecord, dmarcRecord string
 
-	// MX Records
+	// MX
 	mxrecords, err := net.LookupMX(domain)
 	if err != nil {
 		fmt.Printf("MX lookup failed: %v\n", err)
@@ -22,7 +22,7 @@ func checkdomain(domain string) {
 		hasMX = true
 	}
 
-	// SPF Records
+	// SPF
 	txtrecords, err := net.LookupTXT(domain)
 	if err != nil {
 		fmt.Printf("SPF lookup failed: %v\n", err)
@@ -36,7 +36,7 @@ func checkdomain(domain string) {
 		}
 	}
 
-	// DMARC Records
+	// DMARC
 	dmarcrecords, err := net.LookupTXT("_dmarc." + domain)
 	if err != nil {
 		fmt.Printf("DMARC lookup failed: %v\n", err)
@@ -50,7 +50,6 @@ func checkdomain(domain string) {
 		}
 	}
 
-	
 	if hasMX {
 		fmt.Println(" MX record found")
 	} else {
@@ -70,18 +69,60 @@ func checkdomain(domain string) {
 	}
 }
 
-func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("Enter your Domains to check:")
+func readFromFile(filename string) []string {
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Printf("Failed to open file: %v\n", err)
+		os.Exit(1)
+	}
+	defer file.Close()
 
+	var domains []string
+	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		domain := strings.TrimSpace(scanner.Text())
+		domain := strings.TrimSpace(scanner.Text()) // line splitting
 		if domain != "" {
-			checkdomain(domain)
+			domains = append(domains, domain)
 		}
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Printf("Input error: %v\n", err)
+		fmt.Printf("Error reading file: %v\n", err)
+		os.Exit(1)
+	}
+
+	return domains
+}
+
+func readFromCLI() []string {
+	fmt.Print("Enter space-separated domains: ")
+
+	scanner := bufio.NewScanner(os.Stdin)
+	if scanner.Scan() {
+		line := scanner.Text()
+		domains := strings.Fields(line) // space splitting
+		return domains
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Printf("Error reading input: %v\n", err)
+		os.Exit(1)
+	}
+
+	return nil
+}
+
+func main() {
+	var domains []string
+
+	if len(os.Args) == 2 {
+		domains = readFromFile(os.Args[1])
+	} else {
+		domains = readFromCLI()
+	}
+
+	fmt.Println("\n--- Results ---")
+	for _, domain := range domains {
+		checkdomain(domain)
 	}
 }
