@@ -80,7 +80,7 @@ func DeleteStcok(w http.ResponseWriter, r * http.Request) {
    id, err := strconv.Atoi(params["id"])
    if( err != nil) {log.Fatal(err)}
    deletedres := deletestock(int64(id))
-   fmt.Sprintf("The stock has been deleted successfully %v", deletedres)
+   fmt.Printf("The stock has been deleted successfully %v", deletedres)
    json.NewEncoder(w).Encode(deletedres)
 }
 
@@ -126,7 +126,7 @@ func getstockid(id int64) (models.Stock, error){
 		return stock , nil
 	
 	default:
-		log.Fatal("Unable to scan row %v", err)
+		log.Fatalf("Unable to scan row %v", err)
   }
   return stock ,err
 }
