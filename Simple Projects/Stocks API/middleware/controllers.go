@@ -55,7 +55,7 @@ func GetStockID(w http.ResponseWriter, r* http.Request) {
     params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 	if(err != nil){log.Fatal(err)}
-	stock := getstockid(int64(id))
+	stock, _ := getstockid(int64(id))
 	json.NewEncoder(w).Encode(stock)
 
 
@@ -102,7 +102,7 @@ func deletestock(id int64) int64{
 
 }
 
-func getstockid(id int64) (models.Stock, err){
+func getstockid(id int64) (models.Stock, error){
   db := CreateConnection()
   defer db.Close()
   var stock models.Stock
