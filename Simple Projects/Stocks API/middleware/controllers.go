@@ -99,7 +99,15 @@ func insertstock(stock models.Stock) int64{
 }
 
 func deletestock(id int64) int64{
-
+   db := CreateConnection()
+   defer db.Close()
+   sqlstatement := 	`DELETE FROM stocks WHERE stockid=$1`
+   res , err := db.Exec(sqlstatement, id)
+   if err != nil {log.Fatalf("Unable to execute querry %v", err)}
+   rowsAffected, err := res.RowsAffected()
+   if err != nil {log.Fatalf("Error with rows affected %v", err)}
+   fmt.Printf("Rows affected is: %v", err)
+   return rowsAffected
 }
 
 func getstockid(id int64) (models.Stock, error){
@@ -143,5 +151,17 @@ func getallstocks() ([]models.Stock, error){
 }
 
 func updatestocks(id int64, stock models.Stock) int64{
-
+   db := CreateConnection()
+   defer db.Close()
+   sqlstatement := `UPDATE stocks SET name=$2, price=$3, company=$4 WHERE stockid=$1`
+   res, err := db.Exec(sqlstatement, id, stock.Name, stock.Price, stock.Company)
+   if err != nil {
+	log.Fatalf("Unable to execute the querry %v", err)
+   }
+   rowsaffected, err := res.RowsAffected()
+   if err != nil {
+	log.Fatalf("Error with rows afftected  %v", err)
+   }
+   fmt.Printf("Total rows affected : %v", rowsaffected)
+   return rowsaffected
 }
