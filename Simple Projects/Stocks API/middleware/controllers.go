@@ -34,7 +34,7 @@ func CreateStock(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal("Unable to decode the body: ", err)
 	}
-	insertID := insertStock(stock)
+	insertID := insertstock(stock)
 	res := models.Resp{
 		ID:      insertID,
 		Message: "stock Created successfully",
@@ -55,7 +55,7 @@ func GetStockID(w http.ResponseWriter, r* http.Request) {
     params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 	if(err != nil){log.Fatal(err)}
-	stock := getstock(int64(id))
+	stock := getstockid(int64(id))
 	json.NewEncoder(w).Encode(stock)
 
 
@@ -82,4 +82,66 @@ func DeleteStcok(w http.ResponseWriter, r * http.Request) {
    deletedres := deletestock(int64(id))
    fmt.Sprintf("The stock has been deleted successfully %v", deletedres)
    json.NewEncoder(w).Encode(deletedres)
+}
+
+
+
+
+func insertstock(stock models.Stock) int64{
+  db := CreateConnection()
+  defer db.Close()
+  sqlStatement := `INSERT INTO stocks(name, price, company) VALUES ($1, $2, $3) RETURNING stockid`
+  var id int64
+  err := db.QueryRow(sqlStatement, stock.Name, stock.Price, stock,stock.Company).Scan(&id)
+   if(err != nil){log.Fatal(err)}
+   fmt.Printf("Inserted a single redcord %v", id)
+   return id
+}
+
+func deletestock(id int64) int64{
+
+}
+
+func getstockid(id int64) (models.Stock, err){
+  db := CreateConnection()
+  defer db.Close()
+  var stock models.Stock
+  sqlstatement := `SELECT * FROM stocks WHERE stockid=$1`
+  row := db.QueryRow(sqlstatement, id)
+  err := row.Scan(&stock.StockID, &stock.Name, &stock.Price, &stock.Company)
+
+  switch err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned")
+		return stock, nil
+	case nil:
+		return stock , nil
+	
+	default:
+		log.Fatal("Unable to scan row %v", err)
+  }
+  return stock ,err
+}
+
+func getallstocks() ([]models.Stock, error){
+   db := CreateConnection()
+   defer db.Close()
+   var stocks []models.Stock
+   sqlstatement := `SELECT * FROM stocks`
+   row, err  := db.Query(sqlstatement)
+   if(err != nil) {
+		log.Fatal("Unable to execute the error")
+   }
+   defer row.Close()
+   for row.Next() {
+	var stock models.Stock
+	err := row.Scan(&stock.StockID, &stock.Name, &stock.Price, &stock.Company)
+	if( err != nil){log.Fatal(err)}
+	stocks = append(stocks, stock)
+   }
+   return stocks, err
+}
+
+func updatestocks(id int64, stock models.Stock) int64{
+
 }

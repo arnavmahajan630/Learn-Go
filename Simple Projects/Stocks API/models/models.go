@@ -9,5 +9,5 @@ type Stock struct {
 
 type Resp struct {
 	ID      int64  `json:"id"`
-	Message string `json"message"`
+	Message string `json:"message"`
 }
