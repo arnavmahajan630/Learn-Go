@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 NAME HERE <arnavmahajan630@gmail.com>
+Copyright © 2025 NAME HERE <Ocean Whisperer>
 */
 package cmd
 
@@ -43,13 +43,13 @@ func init() {
 }
 
 type Joke struct {
-	ID     string    `json:"id"`
+	ID     string `json:"id"`
 	Joke   string `json:"joke"`
-	Status int `json:"status"`
+	Status int    `json:"status"`
 }
 
 func getrandomJoke() {
-    resb := getJokeData("https://icanhazdadjoke.com/")
+	resb := getJokeData("https://icanhazdadjoke.com/")
 	var joke Joke
 	err := json.Unmarshal(resb, &joke)
 	if err != nil {
@@ -60,19 +60,19 @@ func getrandomJoke() {
 }
 
 func getJokeData(BaseApi string) []byte {
-	req , err := http.NewRequest(http.MethodGet, BaseApi, nil)
+	req, err := http.NewRequest(http.MethodGet, BaseApi, nil)
 	if err != nil {
 		log.Fatal("Error creating request:", err)
 	}
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("User-Agent", "Go-CLI-Dad-Jokes-Generator")
 	res, err := http.DefaultClient.Do(req)
-	if err != nil {	
+	if err != nil {
 		log.Fatal("Error making request:", err)
 	}
 	defer res.Body.Close()
-	resb , err := io.ReadAll(res.Body)
-	if err != nil {	
+	resb, err := io.ReadAll(res.Body)
+	if err != nil {
 		log.Fatal("Error making request:", err)
 	}
 	return resb
