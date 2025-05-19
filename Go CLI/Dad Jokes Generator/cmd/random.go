@@ -24,12 +24,19 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		getrandomJoke()
+		jkterm, _ := cmd.Flags().GetString("term")
+		if jkterm != "" {
+			getrandomJokeWithTerm(jkterm)
+		} else {
+			getrandomJoke()
+		}
 	},
 }
 
+
 func init() {
 	rootCmd.AddCommand(randomCmd)
+	randomCmd.PersistentFlags().StringP("term", "t", "", "A search term to find a Dad joke")
 
 	// Here you will define your flags and configuration settings.
 
@@ -76,4 +83,29 @@ func getJokeData(BaseApi string) []byte {
 		log.Fatal("Error making request:", err)
 	}
 	return resb
+}
+
+type SearchResult struct {
+	Results    json.RawMessage `json:"results"`
+	SearchTerm string          `json:"search_term"`
+	Status     int             `json:"status"`
+	TotalJokes int             `json:"total_jokes"`
+}
+
+func getrandomJokeWithTerm(term string) []byte{
+	fmt.Print("The term you searched for is: ", term)
+	url := fmt.Sprintf("https://icanhazdadjoke.com/search?term=%s", term)
+	respb := getJokeData(url)
+	var jokelist SearchResult
+	err := json.Unmarshal(respb, &jokelist)
+	if err != nil {	
+		log.Fatal("Error unmarshalling JSON:", err)
+	}
+	jokes := []Joke{}
+	err = json.Unmarshal(jokelist.Results, &jokes)
+	if err != nil {			
+		log.Fatal("Error unmarshalling JSON:", err)
+	}
+
+
 }
