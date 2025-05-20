@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	data "github.com/Ocean-Whisperer/Learn-Go/Go-CLI/PDF-Tool/Data"
 	"github.com/johnfercher/maroto/pkg/color"
 	"github.com/johnfercher/maroto/pkg/consts"
 	"github.com/johnfercher/maroto/pkg/pdf"
@@ -70,9 +71,7 @@ func BuildPdfList(m pdf.Maroto) {
 	m.SetBackgroundColor(color.NewWhite())
 	lightpurp := getLightPurpleColor()
 	tableheadings := []string{"Product", "Description", "Price"}
-	contents := [][]string{{"Iphone 14 Pro", "Latest iPhone model", "$999"},
-		{"Samsung Galaxy S21", "Latest Samsung model", "$799"},
-		{"Google Pixel 6", "Latest Google model", "$699"}}
+	contents := data.FruitList(20) 
 	m.TableList(tableheadings, contents, props.TableList{
 		HeaderProp: props.TableListContent{
 			Size:      9,
