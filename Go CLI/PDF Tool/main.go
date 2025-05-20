@@ -14,6 +14,7 @@ func main() {
 	m := pdf.NewMaroto(consts.Portrait, consts.A4)
 	m.SetPageMargins(20, 10, 20)
 	BuildHeader(m)
+	BuildPdfList(m)
 	err := m.OutputFileAndClose("pdfs/example.pdf")
 	if err != nil {
 		log.Fatal(err)
@@ -35,7 +36,7 @@ func BuildHeader(m pdf.Maroto) {
 	})
 	m.Row(10, func() {
 		m.Col(12, func() {
-			m.Text("Prepared with Love by Ocean Whisperer", props.Text{
+			m.Text("With Love By Ocean Whisperer", props.Text{
 				Style: consts.Bold,
 				Align: consts.Center,
 				Color: getColor(),
@@ -46,8 +47,60 @@ func BuildHeader(m pdf.Maroto) {
 
 func getColor() color.Color {
 	return color.Color{
-		Red: 25,
+		Red:   25,
 		Green: 25,
-		Blue: 112,
+		Blue:  112,
+	}
+}
+
+func BuildPdfList(m pdf.Maroto) {
+	m.SetBackgroundColor(getTealColor())
+	m.Row(10, func() {
+		m.Col(12, func() {
+			m.Text("Simple Products Table", props.Text{
+				Top:    2,
+				Size:   13,
+				Color:  color.NewWhite(),
+				Family: consts.Courier,
+				Style:  consts.Bold,
+				Align:  consts.Center,
+			})
+		})
+	})
+	m.SetBackgroundColor(color.NewWhite())
+	lightpurp := getLightPurpleColor()
+	tableheadings := []string{"Product", "Description", "Price"}
+	contents := [][]string{{"Iphone 14 Pro", "Latest iPhone model", "$999"},
+		{"Samsung Galaxy S21", "Latest Samsung model", "$799"},
+		{"Google Pixel 6", "Latest Google model", "$699"}}
+	m.TableList(tableheadings, contents, props.TableList{
+		HeaderProp: props.TableListContent{
+			Size:      9,
+			GridSizes: []uint{3, 7, 2},
+		},
+		ContentProp: props.TableListContent{
+			Size:      8,
+			GridSizes: []uint{3, 7, 2},
+		},
+		Align:                consts.Left,
+		HeaderContentSpace:   1,
+		Line:                 false,
+		AlternatedBackground: &lightpurp,
+	})
+}
+
+func getLightPurpleColor() color.Color {
+	return color.Color{
+		Red:   210,
+		Green: 200,
+		Blue:  230,
+	}
+}
+
+func getTealColor() color.Color {
+	return color.Color{
+		Red:   0,
+		Green: 128,
+		Blue:  128,
 	}
 }
