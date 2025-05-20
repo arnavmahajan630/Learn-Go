@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math/rand"
 	"net/http"
 
 	"github.com/spf13/cobra"
@@ -92,11 +93,14 @@ type SearchResult struct {
 	TotalJokes int             `json:"total_jokes"`
 }
 
-func getrandomJokeWithTerm(term string) []byte{
-	fmt.Print("The term you searched for is: ", term)
+func getrandomJokeWithTerm(term string) {
+	len, list:= getjokedatawithTerm(term)
+	randomize(len, list)
+}
+func getjokedatawithTerm(term string) (total_jokes int, listj []Joke) {
 	url := fmt.Sprintf("https://icanhazdadjoke.com/search?term=%s", term)
 	respb := getJokeData(url)
-	var jokelist SearchResult
+	jokelist := SearchResult{}
 	err := json.Unmarshal(respb, &jokelist)
 	if err != nil {	
 		log.Fatal("Error unmarshalling JSON:", err)
@@ -106,6 +110,20 @@ func getrandomJokeWithTerm(term string) []byte{
 	if err != nil {			
 		log.Fatal("Error unmarshalling JSON:", err)
 	}
+	return jokelist.TotalJokes, jokes
 
+}
+
+
+func randomize(len int, list[]Joke) {
+	 min := 0
+	 max := len - 1
+	 if len <= 0 {
+		fmt.Println("No jokes found")
+		return
+	 }else {
+		randomNum := rand.Intn(max - min + 1) + min
+		fmt.Println("Random Joke: ", list[randomNum].Joke)
+	 }
 
 }
