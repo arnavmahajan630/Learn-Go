@@ -13,11 +13,13 @@ import (
 func main() {
 	m := pdf.NewMaroto(consts.Portrait, consts.A4)
 	m.SetPageMargins(20, 10, 20)
+	BuildHeader(m)
 	err := m.OutputFileAndClose("pdfs/example.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("PDF generated successfully!")
+
 }
 
 func BuildHeader(m pdf.Maroto) {
@@ -34,7 +36,6 @@ func BuildHeader(m pdf.Maroto) {
 	m.Row(10, func() {
 		m.Col(12, func() {
 			m.Text("Prepared with Love by Ocean Whisperer", props.Text{
-				Top:    3,
 				Style: consts.Bold,
 				Align: consts.Center,
 				Color: getColor(),
@@ -45,8 +46,8 @@ func BuildHeader(m pdf.Maroto) {
 
 func getColor() color.Color {
 	return color.Color{
-		Red:   88,
-		Green: 80,
-		Blue:  99,
+		Red: 25,
+		Green: 25,
+		Blue: 112,
 	}
 }
