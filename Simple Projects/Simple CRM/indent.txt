@@ -1,1 +1,0 @@
-Building a simple CRM using GORM SQLITE and GO Fiber
