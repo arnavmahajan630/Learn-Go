@@ -25,3 +25,8 @@ func main() {
 	// the db must implement all the same methods defined in the interface
 	// we can package the db with our application now we can call on db fucntions so fluently
 }
+
+/*
+
+we can switch out the db easy af since we just need our db to implement the expectedf interface
+*/
