@@ -1,4 +1,4 @@
-package main
+package primitives
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 // 	fmt.Println(num)
 // }
 
-func main() {
+func PrimitiveCon() {
 	// go somefunc("12")
     // go somefunc("13")
 	// go somefunc("21")
