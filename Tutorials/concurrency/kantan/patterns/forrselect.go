@@ -10,7 +10,8 @@ func PatternCon()  {
 		for _, c := range mychars {
 			select {
 			case charchan <- c:
-				
+			default:
+				fmt.Println("hi")
 			}
 		}
 		close(charchan)
