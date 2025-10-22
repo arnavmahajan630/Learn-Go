@@ -2,7 +2,7 @@ package cache
 
 import "fmt"
 
-const Size int = 10
+const Size int = 5
 
 // node definition
 type Node struct {
@@ -82,6 +82,8 @@ func (c * Cache) Add(n * Node) {
 	c.queue.Head.right = n; // now head points to the new head ADD(n)
 	n.left= c.queue.Head // this left now points to head whose left is nullptr.
 	n.right = temp // the n.left points to the previus head which is  now the second element. essentially the next of head
+
+	temp.left = n // reconnect birdirectionally
 	c.queue.Length++
 
 	if c.queue.Length > Size {
