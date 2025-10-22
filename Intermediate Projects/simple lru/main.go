@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("hello and testing")
+	fmt.Println("Simple LRU Cache Implementation")
 
 	mycache := 	cache.NewCache()	
 
