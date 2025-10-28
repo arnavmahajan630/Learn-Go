@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/arnavmahajan630/Learn-Go/Intermediate-Projects/MyOwnDb/api"
 	"github.com/arnavmahajan630/Learn-Go/Intermediate-Projects/MyOwnDb/db"
+	"github.com/go-chi/chi/v5"
 )
 
 type User struct {
@@ -25,6 +27,8 @@ type Address struct {
 
 func main() {
 	fmt.Println("hello and testing")
+	r := chi.NewRouter()
+	r.Get("/", api.Welcome)
 
 	directory := "./"
 	if err := db.NewDb(directory, nil); err != nil {
@@ -39,7 +43,7 @@ func main() {
 		{"Will", "25", "1234567890", "NewComp", Address{"New York", "US", "US", "1221122112"}},
 		{"Smith", "33", "1234567890", "NewComp", Address{"New York", "US", "US", "1221122112"}},
 	}
-
+	 // mock to be replaced with api
 	for _, val := range emplace {
 		db.Write("users", val.Name, User{
 			Name: val.Name,
@@ -56,4 +60,6 @@ func main() {
 	}
 
 	fmt.Println("records")
+
+	
 }
