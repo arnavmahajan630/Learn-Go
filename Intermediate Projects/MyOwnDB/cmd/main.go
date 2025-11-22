@@ -59,7 +59,23 @@ func main() {
 		log.Fatal("Failed to read from the Database. Reason: %v", err)
 	}
 
-	fmt.Println("records")
+	fmt.Println("records") // printed as json data
+
+	allEmployes := User{}
+
+	for _, emp := range records {
+		empfound := User{}
+		if err := json.Unmarshal([]byte(emp), &empfound); err != nil {
+			fmt.Println("Error: ", err)
+		}
+
+	}
+	fmt.Println(allEmployes) // printed as struct
+
+	if err := db.Delete("user", "jhon"); err != nil {
+		fmt.Println("Error", err)
+	} // delete single user
+	// set user as null & and delete whole cluster
 
 	
 }
