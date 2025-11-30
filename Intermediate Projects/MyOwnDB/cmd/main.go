@@ -76,7 +76,5 @@ func main() {
 		fmt.Println("Error", err)
 	} // delete single user
 	// set user as null & and delete whole cluster
-
-		// Commiting from core new os := testing everything
 	
 }
