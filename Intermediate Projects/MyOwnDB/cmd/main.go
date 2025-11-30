@@ -77,5 +77,6 @@ func main() {
 	} // delete single user
 	// set user as null & and delete whole cluster
 
+		// Commiting from core new os := testing everything
 	
 }
