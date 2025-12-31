@@ -25,7 +25,7 @@ func Home() {
 
 
 	for {
-		fmt.Printf(">")
+		fmt.Printf("> ")
 		scanner.Scan()
 		input := scanner.Text()
 		cleaned := CleanInput(input)
