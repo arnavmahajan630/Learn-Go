@@ -26,9 +26,5 @@ func main() {
 	app.Use(logger.New())
 	setupRoutes(app)
 	log.Printf("Server Started on Port: %v", cfg.APP_PORT)
-	if err := app.Listen(cfg.APP_PORT); err != nil {
-		log.Fatal("Error starting the server: ", err)
-	}
-
-	
+	log.Fatal(app.Listen(cfg.APP_PORT))
 }
