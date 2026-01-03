@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html"
+	"log"
 	"net/http"
 )
 
@@ -18,4 +19,9 @@ func main() {
 
 	http.HandleFunc("/", handleRoot)
 	http.HandleFunc("/hi", handleHi)
+
+	log.Println("Server started successfully on Port: 3000")
+	if err := http.ListenAndServe(":8081", nil); err != nil {
+		log.Fatalf("Error starting the server %v", err)
+	}
 }
