@@ -47,6 +47,7 @@ func perClientRateLimit(next func(w http.ResponseWriter, r * http.Request)) http
 			if err := json.NewEncoder(w).Encode(&message); err != nil {
 				return
 			}
+			return
 		}
 		next(w, r)
 	})
