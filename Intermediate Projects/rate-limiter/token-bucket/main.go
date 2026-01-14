@@ -26,7 +26,7 @@ func endPointHander(w http.ResponseWriter, r * http.Request) {
 
 func main() {
 
-	http.HandleFunc("/endpoint", endPointHander)
+	http.HandleFunc("/endpoint", rateLimiter(endPointHander))
 	fmt.Println("Server started on Port 3000 :| ")
 	log.Fatal(http.ListenAndServe(":3000", nil))
 
