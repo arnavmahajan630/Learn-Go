@@ -22,6 +22,19 @@ func perClientRateLimit(next func(w http.ResponseWriter, r * http.Request)) http
 		mu sync.Mutex
 		clients = make(map[string]*Client)
 	)
+
+	go func(){
+		for{
+			time.Sleep(time.Minute)
+			mu.Lock()
+			for ip , client := range clients {
+				if time.Since(client.lastSeen) >= 3*time.Minute{
+					delete(clients, ip)
+				}
+			}
+			mu.Unlock()
+		}
+	}()
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ip, _, err := net.SplitHostPort(r.RemoteAddr)
 		if err != nil {
