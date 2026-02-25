@@ -11,8 +11,8 @@ func main() {
 	go func() {
 		data++
 	}()
-	time.Sleep(50 * time.Microsecond)
+	time.Sleep(1 * time.Microsecond)
 	if data != 0 {
 		fmt.Printf("the value is %v\n", data)
-	}
+	} else {fmt.Println("Value was unchanged")}
 }
