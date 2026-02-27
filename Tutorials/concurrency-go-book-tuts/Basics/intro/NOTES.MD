@@ -22,5 +22,6 @@ another. In this state, the program will never recover without outside intervent
 * Livelocks are programs that are actively performing concurrent operations, but these
 operations do nothing to move the state of the program forward.
 
-* 
+* Starvation is any situation where a concurrent process cannot get all the resources it
+needs to perform work.
 
