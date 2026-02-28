@@ -2,8 +2,21 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
+
+type Counter struct {
+	mu * sync.Mutex
+	value int
+}
+
+
+func (c Counter) Increment(){
+	c.mu.Lock()
+	c.value++;
+	c.mu.Unlock()
+} // guarding the state of a stuct example. we go with the primitive type
 
 func main() {
 

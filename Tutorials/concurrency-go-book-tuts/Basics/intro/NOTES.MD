@@ -25,7 +25,13 @@ operations do nothing to move the state of the program forward.
 * Starvation is any situation where a concurrent process cannot get all the resources it
 needs to perform work.
 
+## Communitcating Synchronous Processes
+
+* The CSP is a style as well as a paper from which the modern golang concurrency is inspired
+
 ## Diagram on choosing legacy based concurrnecy or modern channel based concurrnecy
 ![alt text](image.png)
+
+
 
 
