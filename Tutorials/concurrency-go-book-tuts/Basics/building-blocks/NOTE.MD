@@ -19,4 +19,11 @@
 * Closures take the variables in lexical scope and put's it on heap if required. but this creates unnecesary instances of the variable on heap. instead of possible we can refference the lexical variables this avoids excess allocations improving performance. (execution time of gorouties is nlon deterministic)
 
 ## Sync Package
+* The classic way of Concurrency using locks for memory synchronization
 
+### WaitGroups
+* To be used when we don't care about the result of a goroutine or have other means of gathering the result. if not then use channels instead.
+
+### Mutex and RWMutex
+* Stands for mutual Exclusion and is used to guard critical sections of programs from racing
+* 
