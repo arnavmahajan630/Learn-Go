@@ -25,3 +25,7 @@ operations do nothing to move the state of the program forward.
 * Starvation is any situation where a concurrent process cannot get all the resources it
 needs to perform work.
 
+## Diagram on choosing legacy based concurrnecy or modern channel based concurrnecy
+![alt text](image.png)
+
+
