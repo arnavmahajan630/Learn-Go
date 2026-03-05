@@ -34,4 +34,4 @@ of an event.
 * sleep some goroutines unitl an annourcer routine does not deliver the message. this is done via sync.Cond
 * Example: A worker checks tasks if there are no tasks it will call cond.wait(). This will unlock the mutex and put the goroutine to sleep.
 * For notifying all the routines who are waiting for a task producer uses cond.Signal. this wakes the sleeping processes for task processing.
-* Must always signal inside the critical section. This is imprtant as it might trigger the Lost-wakeup problem.
+* Must always signal inside the critical section. This is imprtant as it might trigger the `Lost-wakeup problem`.
