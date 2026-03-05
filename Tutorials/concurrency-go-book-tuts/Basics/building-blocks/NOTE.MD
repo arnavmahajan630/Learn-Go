@@ -9,7 +9,7 @@
 * Goroutines are super lightweight (few kbs) comapred to OS threads. can spin up thousands in same address space
 * The GC does not clean zombie goroutines.
 
-### for-join model
+### fork-join model
 
 * a process is forked() fro mthe main as child and then needs to meet back with the parent.
 * sync.Waitgroup is one of the ways to join a child back with it's parent
