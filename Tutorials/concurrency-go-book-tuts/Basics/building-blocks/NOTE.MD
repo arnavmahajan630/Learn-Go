@@ -26,4 +26,11 @@
 
 ### Mutex and RWMutex
 * Stands for mutual Exclusion and is used to guard critical sections of programs from racing
-* 
+* RWMutex means a goroutine can have access to reading a resource if another goroutine is not holding it for writing. meaning multiple writes can be performed parellelly.
+
+### Cond
+* a rendezvous point for goroutines waiting for or announcing the occurrence
+of an event.
+* sleep some goroutines unitl an annourcer routine does not deliver the message. this is done via sync.Cond
+* Example: A worker checks tasks if there are no tasks it will call cond.wait(). This will unlock the mutex and put the goroutine to sleep.
+* For notifying all the routines who are waiting for a task producer uses cond.Signal. this wakes the sleeping processes for task processing.
