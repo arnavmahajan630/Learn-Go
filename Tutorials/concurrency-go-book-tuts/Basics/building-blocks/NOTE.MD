@@ -35,3 +35,12 @@ of an event.
 * Example: A worker checks tasks if there are no tasks it will call cond.wait(). This will unlock the mutex and put the goroutine to sleep.
 * For notifying all the routines who are waiting for a task producer uses cond.Signal. this wakes the sleeping processes for task processing.
 * Must always signal inside the critical section. This is imprtant as it might trigger the `Lost-wakeup problem`.
+
+### Once
+* `sync.Once` is not about doing something once in the program — it’s about doing it once when many goroutines may attempt it concurrently
+* Use when events are triggered by demand
+* Use Case: Lazy initialization where we can intialize something on demand
+* once uses done, mutex after completion it marks as done and unlocks mutext so preemption causes no race conditions
+* Sync.Once only executed once for the Instance of that specific Once
+* TYPE: reentrant deadlock - goroutine tries to acquire a lock it already holds.
+* If f calls Do again on the same Once instance, it will deadlock.
