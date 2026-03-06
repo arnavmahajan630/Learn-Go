@@ -44,3 +44,6 @@ of an event.
 * Sync.Once only executed once for the Instance of that specific Once
 * TYPE: reentrant deadlock - goroutine tries to acquire a lock it already holds.
 * If f calls Do again on the same Once instance, it will deadlock.
+
+### Pool
+* 
