@@ -1,7 +1,21 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "sync"
+)
+
+var pool = sync.Pool{
+    New: func() any {
+        fmt.Println("Allocating new object")
+        return make([]byte, 1024)
+    },
+}
 
 func main() {
-	fmt.Println("hello to Pools in Go!")
+    b1 := pool.Get().([]byte)
+    pool.Put(b1)
+
+    b2 := pool.Get().([]byte)
+    pool.Put(b2)
 }

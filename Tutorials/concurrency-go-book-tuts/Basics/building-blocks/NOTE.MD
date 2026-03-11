@@ -35,6 +35,7 @@ of an event.
 * Example: A worker checks tasks if there are no tasks it will call cond.wait(). This will unlock the mutex and put the goroutine to sleep.
 * For notifying all the routines who are waiting for a task producer uses cond.Signal. this wakes the sleeping processes for task processing.
 * Must always signal inside the critical section. This is imprtant as it might trigger the `Lost-wakeup problem`.
+* The cond.Signal() wakes only one goroutine that has been sleeping for longest time. If we need multiple routines then we should call the Cond.Broadcast() This wakes all the sleeping routines registered to that mutex.
 
 ### Once
 * `sync.Once` is not about doing something once in the program — it’s about doing it once when many goroutines may attempt it concurrently
@@ -46,4 +47,17 @@ of an event.
 * If f calls Do again on the same Once instance, it will deadlock.
 
 ### Pool
-* 
+* Pool is a concurrent-safe implementation of the object pool pattern.
+* Pool's `Get` will first check whether there are any available instances within the pool to return to the caller, and if not, call its New member variable to create a new one.
+* After using the Caller calls the Put method to put the instance back in the Pool to be used by other prcoesses.
+* `sync.Pool` is a temporary object reuse cache
+* The GC does not gaurentee that the object state is saved and cleans it up. Should never use it for persistant state wide storage purposes. temporary buffers are the best.
+* fmt writes to a buffer from pool and returns the buffer.
+* POINTERS TO REMEMBER PERTAINING TO POOL
+    * When instantiating sync.Pool, give it a New member variable that is thread-safe
+    when called.
+    * When you receive an instance from Get, make no assumptions regarding the
+    state of the object you receive back.
+    * Make sure to call Put when you’re finished with the object you pulled out of the
+    pool. Otherwise, the Pool is useless. Usually this is done with defer.
+    * Objects in the pool must be roughly uniform in makeup.
