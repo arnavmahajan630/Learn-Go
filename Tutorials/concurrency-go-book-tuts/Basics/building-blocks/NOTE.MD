@@ -61,3 +61,5 @@ of an event.
     * Make sure to call Put when you’re finished with the object you pulled out of the
     pool. Otherwise, the Pool is useless. Usually this is done with defer.
     * Objects in the pool must be roughly uniform in makeup.
+
+## Channels
