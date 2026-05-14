@@ -54,6 +54,7 @@ of an event.
 * `sync.Pool` is a temporary object reuse cache
 * The GC does not gaurentee that the object state is saved and cleans it up. Should never use it for persistant state wide storage purposes. temporary buffers are the best.
 * fmt writes to a buffer from pool and returns the buffer.
+* we never test data being received from an object from the pool. always use reset to clean data.
 * POINTERS TO REMEMBER PERTAINING TO POOL
     * When instantiating sync.Pool, give it a New member variable that is thread-safe
     when called.
