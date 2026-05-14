@@ -45,6 +45,7 @@ of an event.
 * Sync.Once only executed once for the Instance of that specific Once
 * TYPE: reentrant deadlock - goroutine tries to acquire a lock it already holds.
 * If f calls Do again on the same Once instance, it will deadlock.
+* even if there are two functions icnrement / decrement even if we do once.Do on either that once object is over and not valid for any of the other fucntions
 
 ### Pool
 * Pool is a concurrent-safe implementation of the object pool pattern.
