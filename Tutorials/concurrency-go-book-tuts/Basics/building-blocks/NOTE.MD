@@ -63,3 +63,16 @@ of an event.
     * Objects in the pool must be roughly uniform in makeup.
 
 ## Channels
+* channel serves as a conduit for a stream of information
+* R_Only or W_Only chan means under that refference a routine is allwoed to perform only restricted action
+* Unbuffered channels: 
+    * don't have any storage. they need both processes to recieve and write at the same time. either waits in a queue and when other comes to life the waiting process is woken up and data is exchanged.
+    * Multiple processes can share single unbuffered channel but 1-1 transaction always
+    * A channel cannot read from an open stream using for range. 
+    * To unblock multiple goroutines waiting on a chan we can just close it. they get auto unblocked. We did use cond but that was explicilty to unblock after certain activity. here whenever chanel closes we can read so it performs similar functionality
+
+* Buffered channels:
+    * perform max N writes where n is the size of the buffer.
+
+* We need to differentiate between chan owners (writer) and chan utilizers (readers)
+* chann1 shows creating a readonly view of a channel where producer is encapsulated.
