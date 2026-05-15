@@ -78,3 +78,18 @@ of an event.
 
 * We need to differentiate between chan owners (writer) and chan utilizers (readers)
 * chann1 shows creating a readonly view of a channel where producer is encapsulated.
+
+
+## Select
+
+* Just like we have wg for primitive select is a sync point for multiple channels
+* IT blocks till one of the channels is ready and we can process
+* an event multiplexer for channel operations. wait on multiple possible communication events simultaneously  
+* It's expensive that waitgroups
+* SELECT Block contains multiple cases much similar to switch case statements. but only 1 of ready among the is chosen pseudo randomly for processing.
+* What if none of the routines are ready ? cancellations and timeouts exist for this reason
+* How to do something else when all are blocking ? use the default clause
+#### one-time event arbitration not constant monitoring
+
+* but for select ? hehe boi now that's monitoring forever
+
