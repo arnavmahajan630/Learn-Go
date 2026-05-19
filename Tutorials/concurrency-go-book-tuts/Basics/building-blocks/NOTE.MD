@@ -93,3 +93,12 @@ of an event.
 
 * but for select ? hehe boi now that's monitoring forever
 
+
+## GOMAXPRCS LEVER
+
+* controls the exact number of logical processors available to the Go runtime
+* Tells the maximum number of OS threads that can run these
+* Research more on the GMP Model where this sets the `P`
+* For a Goroutine (G) to actually run, an OS thread (M) must acquire a logical processor (P). Therefore, if GOMAXPROCS is set to 4, there are only 4 Ps available. Even if you spin up 10,000 Goroutines, only 4 OS threads will be actively executing Go code at any given microsecond.
+
+* Under ristricted infra such as rstrictions of logical CPU by docker or kubernetes we need to manually change this value.
