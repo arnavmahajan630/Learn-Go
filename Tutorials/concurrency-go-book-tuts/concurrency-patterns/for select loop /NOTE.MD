@@ -11,3 +11,11 @@
 - Then are able to cancel this routine.
 - <-terminated means we are waiting to read from terminated so we are blocking here till terminated becoems available this waiting. this is similar to wg.wait() but thas was a primitive and this is modern channels based communication
 - This patterns allows us manual cancellation
+
+
+- The fss shows example of a writer and how after reading first 3 integrers we stop the go routine
+
+#### Key pointers
+* We use a channel to ensure sync terminated that informs us regarding the termination status of routine
+* we use a channel Done to make the cancellation
+* Together both contribute it making a shutdown handshake for the goroutine
