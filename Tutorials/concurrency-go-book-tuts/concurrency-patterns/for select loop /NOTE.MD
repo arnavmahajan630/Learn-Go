@@ -19,3 +19,6 @@
 * We use a channel to ensure sync terminated that informs us regarding the termination status of routine
 * we use a channel Done to make the cancellation
 * Together both contribute it making a shutdown handshake for the goroutine
+
+* Signaling Done means we are requesting Cancellation
+* waiting for terminated means that cleanup is completed
