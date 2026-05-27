@@ -13,9 +13,7 @@ var (
 	PizzaSizes  = []string{"Small", "Medium", "Large", "ExtraLarge"}
 )
 
-type OrderModel struct {
-	DB *gorm.DB
-}
+
 
 type Order struct {
 	ID           string      `gorm:"primaryKey; size:14" json:"id"`
@@ -59,14 +57,12 @@ func (oi * OrderItem) BeforeCreate(tx * gorm.DB) error{
 	return nil
 }
 
-
-func (o * OrderModel) CreateOrder(order * Order) error{
-	return o.DB.Create(order).Error
+func (d *DbModel) CreateOrder(order *Order) error {
+    return d.DB.Create(order).Error
 }
 
-
-func (o * OrderModel) GetOrder(id string) (*Order, error){
-	var order Order
-	err := o.DB.Preload("Items").First(&order, "id = ?", id).Error
-	return &order, err
+func (d *DbModel) GetOrder(id string) (*Order, error) {
+    var order Order
+    err := d.DB.Preload("Items").First(&order, "id = ?", id).Error
+    return &order, err
 }
