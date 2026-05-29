@@ -64,3 +64,23 @@ func (h * Handler) SubmitOrderPost(c * gin.Context) {
 	c.Redirect(http.StatusSeeOther, "/customer/"+order.ID)
 
 }
+
+func (h * Handler) ServeCustomer(c * gin.Context) {
+	orderId := c.Param("id")
+	if orderId == "" {
+		c.String(http.StatusBadRequest,  "Order Id is required")
+	}
+
+	order , err := h.orders.GetOrder(orderId)
+	if err != nil {
+		c.String(http.StatusNotFound,  "Order not found")
+		return
+	}
+
+	c.HTML(http.StatusOK, "customer.tmpl", gin.H{
+		"Order": order,
+
+	})
+	
+
+}
