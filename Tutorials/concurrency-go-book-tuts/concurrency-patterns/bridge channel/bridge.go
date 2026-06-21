@@ -1,42 +1,42 @@
 package main
 
-import "fmt"
+// import "fmt"
 
-func bridge(chanStream <-chan <-chan int) <-chan int {
-    out := make(chan int)
+// func bridge(chanStream <-chan <-chan int) <-chan int {
+//     out := make(chan int)
 
-    go func() {
-        defer close(out)
+//     go func() {
+//         defer close(out)
 
-        for stream := range chanStream {
-            for val := range stream {
-                out <- val
-            }
-        }
-    }()
+//         for stream := range chanStream {
+//             for val := range stream {
+//                 out <- val
+//             }
+//         }
+//     }()
 
-    return out
-}
+//     return out
+// }
 
-func main() {
-    chanStream := make(chan (<-chan int))
+// func main() {
+//     chanStream := make(chan (<-chan int))
 
-    go func() {
-        defer close(chanStream)
+//     go func() {
+//         defer close(chanStream)
 
-        for i := 1; i <= 3; i++ {
-            stream := make(chan int, 2)
+//         for i := 1; i <= 3; i++ {
+//             stream := make(chan int, 2)
 
-            stream <- i*10 + 1
-            stream <- i*10 + 2
+//             stream <- i*10 + 1
+//             stream <- i*10 + 2
 
-            close(stream)
+//             close(stream)
 
-            chanStream <- stream
-        }
-    }()
+//             chanStream <- stream
+//         }
+//     }()
 
-    for v := range bridge(chanStream) {
-        fmt.Println(v)
-    }
-}
+//     for v := range bridge(chanStream) {
+//         fmt.Println(v)
+//     }
+// }
