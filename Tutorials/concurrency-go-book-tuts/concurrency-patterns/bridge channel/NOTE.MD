@@ -1,4 +1,4 @@
-## The TEE Channel
+## The Bridge Channel
 
 * For a system producing multiple channels it's better to send through another channel
 Visual
