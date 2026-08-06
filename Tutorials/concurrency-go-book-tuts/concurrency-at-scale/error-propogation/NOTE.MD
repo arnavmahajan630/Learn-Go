@@ -12,3 +12,11 @@ was initiated and ending with where the error was instantiated. The error should
 * Bugs:raw errors that are not customized to the system. An error can become a bug because it might leak Logic
 * Known Edge Cases: Errors that are designed for.
 
+
+- Any error leaving the application boundary should be represented as an AppError (or some equivalent application-level error) before it reaches the user.
+
+## err Error
+* error.As: It traverses the Erorrchain and finds the correct level of error and extracts the message required for display. 
+* error.Is: walks the propogation chain and returns a boolean value when compared with a specific error
+    - eg: error.Is(err, os.ErrorNotExisit)
+
